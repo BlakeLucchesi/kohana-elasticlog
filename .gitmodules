@@ -1,0 +1,3 @@
+[submodule "vendor/elastica"]
+	path = vendor/elastica
+	url = git://github.com/ruflin/Elastica.git
