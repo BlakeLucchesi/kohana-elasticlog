@@ -7,8 +7,11 @@
  * @category   Logging
  * @author     Blake Lucchesi
  */
-class Kohana_Log_Writer_Elasticlog extends Log_Writer {
+class Kohana_Log_Elasticlog extends Log_Writer {
 	
+	public function __construct() {
+		$config = Kohana::$config->load('elasticsearch');
+	}
 	
 	public function write(array $messages) {
 		
