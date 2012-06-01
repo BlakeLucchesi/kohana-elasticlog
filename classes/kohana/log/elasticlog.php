@@ -9,12 +9,19 @@
  */
 class Kohana_Log_Elasticlog extends Log_Writer {
 	
+	protected $config;
+	
 	public function __construct() {
-		$config = Kohana::$config->load('elasticsearch');
+		$this->_config = Kohana::$config->load('elasticlog');
 	}
 	
 	public function write(array $messages) {
-		
+		foreach ($messages as $message) {
+			$documents[] = new Elastica_Document(NULL, $message, 'logs');
+		}
+		$client = new Elastica_Client($this->_config['connections']);
+		$index = $client->getIndex('logs');
+		$index->addDocuments($documents);
 	}
 	
 }

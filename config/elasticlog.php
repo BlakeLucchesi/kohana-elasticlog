@@ -2,10 +2,10 @@
 
 $config = array();
 
-$config['hosts'] = array(
+$config['connections'] = array(
 	array(
-		'hostname' => 'localhost',
-		'port' => '9300',
+		'host' => 'localhost',
+		'port' => '9200',
 	)
 );
 
