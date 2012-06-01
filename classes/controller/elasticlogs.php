@@ -3,14 +3,18 @@
 class Controller_Elasticlogs extends Controller {
 	
 	public function action_index() {
+		Kohana::$log->add(Log::NOTICE, "Searching through logs");
 		$config = Kohana::$config->load('elasticlog');
 		$client = new Elastica_Client($config['connections']);
-		$search = new Elastica_Search($client);
-		$search->addIndex('logs')->addType('log');
-		print Debug::vars($search->search());
-		// print Debug::vars($query);
-		// $response = $client->request('logs/_search', 'GET', array(), $query);
-		// print Debug::vars($response);
+		$index = $client->getIndex('logs');
+		
+		$query = new Elastica_Query_MatchAll();
+		
+		// $query = new Elastica_Query_Fuzzy();
+		// $query->addField('body', array('value' => 'HTTP_Exception_404'));
+		
+		$results = $index->search($query);
+		print View::factory('elasticlog/logs')->bind('results', $results);
 	}
 	
 	public function action_install() {
